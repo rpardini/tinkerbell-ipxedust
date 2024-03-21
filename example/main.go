@@ -11,7 +11,7 @@ import (
 
 	"github.com/go-logr/logr"
 	"github.com/go-logr/stdr"
-	"github.com/tinkerbell/ipxedust"
+	"github.com/rpardini/tinkerbell-ipxedust"
 )
 
 func main() {
