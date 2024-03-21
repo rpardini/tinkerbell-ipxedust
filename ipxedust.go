@@ -14,8 +14,8 @@ import (
 	"dario.cat/mergo"
 	"github.com/go-logr/logr"
 	"github.com/pin/tftp/v3"
-	"github.com/tinkerbell/ipxedust/ihttp"
-	"github.com/tinkerbell/ipxedust/itftp"
+	"github.com/rpardini/tinkerbell-ipxedust/ihttp"
+	"github.com/rpardini/tinkerbell-ipxedust/itftp"
 	"golang.org/x/sync/errgroup"
 )
 

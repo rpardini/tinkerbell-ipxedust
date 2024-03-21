@@ -1,7 +1,7 @@
 #!ipxe
 
 set user-class Tinkerbell
-echo Welcome to Neverland!
+echo Welcome to rpardini fork of Neverland!
 
 # Allow the operator to drop to a shell
 prompt --key 0x02 --timeout 2000 Press Ctrl-B for the iPXE command line... && shell ||
