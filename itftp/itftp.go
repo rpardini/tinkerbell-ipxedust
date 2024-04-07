@@ -78,6 +78,43 @@ func (t Handler) HandleRead(filename string, rf io.ReaderFrom) error {
 		return nil // hack success
 	}
 
+	// If full is exactly "pxelinux.cfg/default" then serve out a custom pxelinux.cfg file
+	if full == "pxelinux.cfg/default" {
+		if rpi, ok := rf.(tftp.OutgoingTransfer); ok {
+			log.Info("pxelinux.cfg default handler", "full", full, "filename", filename, "remote_add", rpi.RemoteAddr())
+
+			// Just spit out some hardcoded pxelinux.cfg content just to test
+			content := []byte(`
+default l0
+menu title SMEE tryout U-Boot menu
+prompt 0
+timeout 100
+label l0
+    menu label Armbian 6.8.4-edge-rockchip64
+    linux /boot/vmlinuz-6.8.4-edge-rockchip64
+    initrd /boot/uInitrd-6.8.4-edge-rockchip64
+    fdt /usr/lib/linux-image-6.8.4-edge-rockchip64/rockchip/rk3566-orangepi-3b.dtb
+    append root=UUID=aa074d7a-7208-47da-8bf4-8e573499e2d2 loglevel=7 console=ttyS0
+label l0r
+    menu label Armbian 6.8.4-edge-rockchip64 (rescue target)
+    linux /boot/vmlinuz-6.8.4-edge-rockchip64
+    initrd /boot/uInitrd-6.8.4-edge-rockchip64
+    fdt /usr/lib/linux-image-6.8.4-edge-rockchip64/rockchip/rk3566-orangepi-3b.dtb
+    append root=UUID=aa074d7a-7208-47da-8bf4-8e573499e2d2 loglevel=7 console=ttyS0 single
+`)
+
+			ct := bytes.NewReader(content)
+			b, err := rf.ReadFrom(ct)
+			if err != nil {
+				log.Error(err, "pxelinux.cfg/default file serve failed", "b", b, "contentSize", len(content))
+				return err
+			}
+			log.Info("pxelinux.cfg/default file served", "bytesSent", b, "contentSize", len(content))
+			return nil // hack success
+
+		}
+	}
+
 	// clients can send traceparent over TFTP by appending the traceparent string
 	// to the end of the filename they really want
 	longfile := filename // hang onto this to report in traces
