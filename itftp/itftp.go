@@ -12,6 +12,7 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
+	"strings"
 
 	"github.com/go-logr/logr"
 	"github.com/pin/tftp/v3"
@@ -57,6 +58,25 @@ func (t Handler) HandleRead(filename string, rf io.ReaderFrom) error {
 	full := filename
 	filename = path.Base(filename)
 	log := t.Log.WithValues("event", "get", "filename", filename, "uri", full, "client", client)
+
+	// If full begins with '/dtb/' then serve it out of binaries
+	if strings.HasPrefix(full, "/dtb/") {
+		log.Info("hack dtb handler", "full", full, "filename", filename)
+		content, ok := binary.Files[filename]
+		if !ok {
+			err := fmt.Errorf("DT file [%v] unknown: %w", filename, os.ErrNotExist)
+			log.Error(err, "DT file unknown")
+			return err
+		}
+		ct := bytes.NewReader(content)
+		b, err := rf.ReadFrom(ct)
+		if err != nil {
+			log.Error(err, "DT file serve failed", "b", b, "contentSize", len(content))
+			return err
+		}
+		log.Info("DT file served", "bytesSent", b, "contentSize", len(content))
+		return nil // hack success
+	}
 
 	// clients can send traceparent over TFTP by appending the traceparent string
 	// to the end of the filename they really want
