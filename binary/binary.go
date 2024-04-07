@@ -28,6 +28,16 @@ var SNP []byte
 //go:embed ipxe.iso
 var IpxeISO []byte
 
+// DTBRock5b is the Rock-5b DTB from rockchip-rk355-edge Armbian kernel as of 6.8.4 + Armbian patches
+//
+//go:embed rockchip-rk3588-rock-5b.dtb--6.8-edge.dtb
+var DTBRock5b []byte
+
+// DTBOrangePi3b is the OrangePi3b DTB from rockchip64-edge Armbian kernel as of 6.8.4 + Armbian patches
+//
+//go:embed rockchip-rk3566-orangepi-3b.dtb--6.8-edge.dtb
+var DTBOrangePi3b []byte
+
 // MagicString is included in each iPXE binary within the embedded script. It
 // can be overwritten to change the behavior at startup.
 var magicString = []byte(`#a8b7e61f1075c37a793f2f92cee89f7bba00c4a8d7842ce3d40b5889032d8881
@@ -37,10 +47,12 @@ var magicStringPadding = bytes.Repeat([]byte{' '}, len(magicString))
 
 // Files is the mapping to the embedded iPXE binaries.
 var Files = map[string][]byte{
-	"undionly.kpxe": Undionly,
-	"ipxe.efi":      IpxeEFI,
-	"snp.efi":       SNP,
-	"ipxe.iso":      IpxeISO,
+	"undionly.kpxe":          Undionly,
+	"ipxe.efi":               IpxeEFI,
+	"snp.efi":                SNP,
+	"ipxe.iso":               IpxeISO,
+	"rk3588-rock-5b.dtb":     DTBRock5b,
+	"rk3566-orangepi-3b.dtb": DTBOrangePi3b,
 }
 
 var ErrPatchTooLong = errors.New("patch string is too long")
