@@ -28,15 +28,20 @@ var SNP []byte
 //go:embed ipxe.iso
 var IpxeISO []byte
 
-// DTBRock5b is the Rock-5b DTB from rockchip-rk355-edge Armbian kernel as of 6.8.4 + Armbian patches
+// DTBRock5b is the Rock-5b DTB from rockchip-rk355-edge Armbian kernel as of 6.8.10 + Armbian patches
 //
 //go:embed rockchip-rk3588-rock-5b.dtb--6.8-edge.dtb
 var DTBRock5b []byte
 
-// DTBOrangePi3b is the OrangePi3b DTB from rockchip64-edge Armbian kernel as of 6.8.4 + Armbian patches
+// DTBOrangePi3b is the OrangePi3b DTB from rockchip64-edge Armbian kernel as of 6.8.10 + Armbian patches
 //
 //go:embed rockchip-rk3566-orangepi-3b.dtb--6.8-edge.dtb
 var DTBOrangePi3b []byte
+
+// DTBOdroidHC4 is the OdroidHC4 DTB from meson64-edge Armbian kernel as of 6.8.10 + Armbian patches
+//
+//go:embed amlogic-meson-sm1-odroid-hc4.dtb--6.8-edge.dtb
+var DTBOdroidHC4 []byte
 
 // MagicString is included in each iPXE binary within the embedded script. It
 // can be overwritten to change the behavior at startup.
@@ -47,12 +52,13 @@ var magicStringPadding = bytes.Repeat([]byte{' '}, len(magicString))
 
 // Files is the mapping to the embedded iPXE binaries.
 var Files = map[string][]byte{
-	"undionly.kpxe":          Undionly,
-	"ipxe.efi":               IpxeEFI,
-	"snp.efi":                SNP,
-	"ipxe.iso":               IpxeISO,
-	"rk3588-rock-5b.dtb":     DTBRock5b,
-	"rk3566-orangepi-3b.dtb": DTBOrangePi3b,
+	"undionly.kpxe":            Undionly,
+	"ipxe.efi":                 IpxeEFI,
+	"snp.efi":                  SNP,
+	"ipxe.iso":                 IpxeISO,
+	"rk3588-rock-5b.dtb":       DTBRock5b,
+	"rk3566-orangepi-3b.dtb":   DTBOrangePi3b,
+	"meson-sm1-odroid-hc4.dtb": DTBOdroidHC4,
 }
 
 var ErrPatchTooLong = errors.New("patch string is too long")
