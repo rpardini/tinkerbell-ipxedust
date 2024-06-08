@@ -38,6 +38,16 @@ var DTBRock5b []byte
 //go:embed rockchip-rk3566-orangepi-3b.dtb--6.8-edge.dtb
 var DTBOrangePi3b []byte
 
+// DTBNanoPCT6 is the OrangePi3b DTB from rockchip-rk3588-edge Armbian kernel as of 6.10-rc2 + Armbian patches
+//
+//go:embed rockchip-rk3588-nanopc-t6.dtb--6.10-edge.dtb
+var DTBNanoPCT6 []byte
+
+// DTBNanoPCNAS3588 is the OrangePi3b DTB from rockchip-rk3588-edge Armbian kernel as of 6.10-rc2 + Armbian patches
+//
+//go:embed rockchip-rk3588-nanopc-cm3588-nas.dtb--6.10-edge.dtb
+var DTBNanoPCNAS3588 []byte
+
 // DTBOdroidHC4 is the OdroidHC4 DTB from meson64-edge Armbian kernel as of 6.8.10 + Armbian patches
 //
 //go:embed amlogic-meson-sm1-odroid-hc4.dtb--6.8-edge.dtb
@@ -52,13 +62,15 @@ var magicStringPadding = bytes.Repeat([]byte{' '}, len(magicString))
 
 // Files is the mapping to the embedded iPXE binaries.
 var Files = map[string][]byte{
-	"undionly.kpxe":            Undionly,
-	"ipxe.efi":                 IpxeEFI,
-	"snp.efi":                  SNP,
-	"ipxe.iso":                 IpxeISO,
-	"rk3588-rock-5b.dtb":       DTBRock5b,
-	"rk3566-orangepi-3b.dtb":   DTBOrangePi3b,
-	"meson-sm1-odroid-hc4.dtb": DTBOdroidHC4,
+	"undionly.kpxe":                Undionly,
+	"ipxe.efi":                     IpxeEFI,
+	"snp.efi":                      SNP,
+	"ipxe.iso":                     IpxeISO,
+	"rk3588-rock-5b.dtb":           DTBRock5b,
+	"rk3566-orangepi-3b.dtb":       DTBOrangePi3b,
+	"meson-sm1-odroid-hc4.dtb":     DTBOdroidHC4,
+	"rk3588-nanopc-t6.dtb":         DTBNanoPCT6,
+	"rk3588-nanopc-cm3588-nas.dtb": DTBNanoPCNAS3588,
 }
 
 var ErrPatchTooLong = errors.New("patch string is too long")
