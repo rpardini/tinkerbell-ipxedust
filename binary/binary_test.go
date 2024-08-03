@@ -10,6 +10,10 @@ func TestBinariesContainMagicString(t *testing.T) {
 		if file == "undionly.kpxe" {
 			continue // undionly.kpxe does not support binary patching
 		}
+		// if file ends with .dtb, it is a device tree binary and does not contain the magic string
+		if file[len(file)-4:] == ".dtb" {
+			continue
+		}
 
 		count := bytes.Count(data, magicString)
 		if count == 0 {
