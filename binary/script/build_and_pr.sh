@@ -138,7 +138,7 @@ function commit_changes() {
 # push changes to origin
 function push_changes() {
     local branch="${1}"
-    local repository="${2:-tinkerbell/ipxedust}"
+    local repository="${2:-rpardini/tinkerbell-ipxedust}"
     local git_actor="${3:-github-actions[bot]}"
     local token="${4:-${GITHUB_TOKEN}}"
 
