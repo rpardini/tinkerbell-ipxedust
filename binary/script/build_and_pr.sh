@@ -34,8 +34,8 @@ binaries=(
 )
 
 git_email="github-actions[bot]@users.noreply.github.com"
-git_name="github-actions[bot]"
-repo="tinkerbell/ipxedust"
+git_name="ipxe-github-actions[bot]"
+repo="rpardini/tinkerbell-ipxedust"
 
 # check for the GITHUB_TOKEN environment variable
 function check_github_token() {
